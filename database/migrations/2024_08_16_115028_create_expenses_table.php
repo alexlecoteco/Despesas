@@ -23,8 +23,8 @@ return new class extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->unsignedInteger('value');
             $table->string('description');
-            $table->unsignedBigInteger('category');
-            $table->foreign('category')->references('id')->on('expenses_categories');
+            $table->unsignedBigInteger('category_id')->nullable();
+            $table->foreign('category_id')->references('id')->on('expenses_categories');
             $table->timestamps();
         });
     }

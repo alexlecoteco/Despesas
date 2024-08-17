@@ -18,7 +18,7 @@ class ExpenseResource extends JsonResource
             'id' => $this->id,
             'user' => UserResource::make($this->user),
             'value' => $this->value,
-            'category' => CategoryResource::make(ExpensesCategoriesModel::find($this->category)),
+            'category' => CategoryResource::make($this->category),
             'description' => $this->description
         ];
     }
