@@ -2,27 +2,28 @@
 
 namespace App\Services;
 
+use App\Http\Resources\ExpenseResource;
 use App\Repository\ExpensesRepository;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ExpensesService
+readonly class ExpensesService
 {
 
-    public function __construct(private readonly ExpensesRepository $expensesRepository)
+    public function __construct(private ExpensesRepository $expensesRepository)
     {
     }
 
     public function show(int $id): JsonResource
     {
         $expense = $this->expensesRepository->show($id);
-        return JsonResource::make($expense);
+        return ExpenseResource::make($expense);
     }
 
-    public function paginate(array $data): AnonymousResourceCollection
+    public function paginate(): AnonymousResourceCollection
     {
-        $expenses = $this->expensesRepository->paginate($data);
-        return JsonResource::collection($expenses);
+        $expenses = $this->expensesRepository->paginate();
+        return ExpenseResource::collection($expenses);
     }
     public function create(array $data): JsonResource
     {

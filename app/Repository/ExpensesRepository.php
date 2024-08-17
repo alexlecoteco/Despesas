@@ -15,7 +15,7 @@ class ExpensesRepository
         return $this->expensesModel->find($id);
     }
 
-    public function paginate(array $data)
+    public function paginate()
     {
         /*
          * TODO
@@ -25,7 +25,7 @@ class ExpensesRepository
          * adicionar filtro de data
          * adicionar filtro de ordenação
          */
-        return $this->expensesModel->paginate($data);
+        return $this->expensesModel->paginate();
     }
 
     public function create(array $data)
