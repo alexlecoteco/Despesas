@@ -54,11 +54,11 @@ class ExpensesController extends Controller
         return $this->expensesService->destroy($id);
     }
 
-    public function importFromCsv(Request $request): void
+    public function importFromCsv(Request $request): JsonResource
     {
         $file = $request->file('file');
         $fileContents = file($file->getPathname());
 
-        $this->expensesService->importFromCsv($fileContents);
+        return $this->expensesService->importFromCsv($fileContents);
     }
 }

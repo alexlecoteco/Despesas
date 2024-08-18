@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * @property string $description
+ * @property int $id
  */
 class ExpensesCategoriesModel extends Model
 {

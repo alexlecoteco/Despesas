@@ -3,10 +3,11 @@
 namespace App\Services;
 
 use App\Http\Resources\ExpenseResource;
+use App\Models\User;
 use App\Repository\ExpensesRepository;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 
 readonly class ExpensesService
 {
@@ -44,22 +45,36 @@ readonly class ExpensesService
         return JsonResource::make();
     }
 
-    public function importFromCsv(array $fileContents): void
+    public function importFromCsv(array $fileContents): JsonResource
     {
         foreach ($fileContents as $key => $line) {
 
-            if ($key === 0) {continue;}
+            if($key === 0) {
+                continue;
+            }
 
             $data = str_getcsv($line);
 
-            $this->expensesRepository->create([
-                'user_id' => 1,
-                'category_id' => null,
-                'value' => number_format($data[1], 2,'',''),
-                'consolidator_id' => $data[2],
-                'consolidator_date' => Carbon::createFromFormat("d/m/Y",$data[0])?->format('Y-m-d'),
-                'description' => $data[3]
-            ]);
+            /*
+             * TODO
+             * criar uma DTO para receber esses valores de data
+             * Receber o usuário pelo token
+             * Passar responsabilidade de mexer no banco de dados para o repository
+             */
+            $user = User::first();
+
+            DB::transaction(function () use ($data, $user) {
+                $this->expensesRepository->create(
+                    $user,
+                    $data[1],
+                    $data[2],
+                    $data[0],
+                    $data[3]
+                );
+            });
+
         }
+        return JsonResource::make([ "message" => "Import from CSV was successful"]);
+
     }
 }
