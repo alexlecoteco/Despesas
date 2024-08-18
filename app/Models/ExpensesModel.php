@@ -25,6 +25,8 @@ class ExpensesModel extends Model
         'value',
         'category_id',
         'description',
+        'consolidator_date',
+        'consolidator_id'
     ];
 
     public function user(): BelongsTo
