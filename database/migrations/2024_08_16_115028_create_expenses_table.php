@@ -21,7 +21,9 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->unsignedInteger('value');
+            $table->string('consolidator_id')->nullable(false);
+            $table->date('consolidator_date');
+            $table->bigInteger('value');
             $table->string('description');
             $table->unsignedBigInteger('category_id')->nullable();
             $table->foreign('category_id')->references('id')->on('expenses_categories');

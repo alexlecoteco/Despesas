@@ -11,6 +11,7 @@ Route::get('/user', function (Request $request) {
 
 Route::controller(ExpensesController::class)->group(function () {
     Route::post('/expenses/store', 'store')->name('expenses.store');
+    Route::post('/expenses/import', 'importFromCsv')->name('expenses.import');
     Route::get('/expenses', 'index')->name('expenses.index');
     Route::get('/expenses/{id}', 'show')->name('expenses.show');
     Route::put('/expenses/{id}', 'update')->name('expenses.update');
