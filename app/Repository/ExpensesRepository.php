@@ -35,7 +35,7 @@ class ExpensesRepository
         User $user,
         string $value,
         string $consolidatorId,
-        string $consolidatorDate,
+        Carbon $consolidatorDate,
         ?string $description = null,
         ?ExpensesCategoriesModel $category = null
     ): ExpensesModel
@@ -43,9 +43,9 @@ class ExpensesRepository
         return $this->expensesModel->create([
             'user_id' => $user->id,
             'category_id' => $category?->id,
-            'value' => number_format($value, 2,'',''),
+            'value' => $value,
             'consolidator_id' => $consolidatorId,
-            'consolidator_date' => Carbon::createFromFormat("d/m/Y",$consolidatorDate)?->format('Y-m-d'),
+            'consolidator_date' => $consolidatorDate->format('Y-m-d'),
             'description' => $description
         ]);
     }

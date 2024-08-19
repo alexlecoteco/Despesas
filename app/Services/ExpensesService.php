@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Repository\ExpensesRepository;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 
 readonly class ExpensesService
@@ -66,11 +67,11 @@ readonly class ExpensesService
 
             DB::transaction(function () use ($data, $user) {
                 $this->expensesRepository->create(
-                    $user,
-                    $data[1],
-                    $data[2],
-                    $data[0],
-                    $data[3]
+                    user: $user,
+                    value: number_format($data[1], 2,'',''),
+                    consolidatorId: $data[2],
+                    consolidatorDate: Carbon::createFromFormat("d/m/Y", $data[0]),
+                    description: $data[3]
                 );
             });
 

@@ -4,9 +4,9 @@ namespace App\Repository;
 
 use App\Models\User;
 
-class UserRepository
+readonly class UserRepository
 {
-    public function __construct(private readonly User $userModel)
+    public function __construct(private User $userModel)
     {
     }
 
