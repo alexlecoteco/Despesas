@@ -47,6 +47,8 @@ readonly class ExpensesService
 
     public function importFromCsv(array $fileContents): JsonResource
     {
+        $user = User::first();
+
         foreach ($fileContents as $key => $line) {
 
             if($key === 0) {
@@ -61,7 +63,6 @@ readonly class ExpensesService
              * Receber o usuário pelo token
              * Passar responsabilidade de mexer no banco de dados para o repository
              */
-            $user = User::first();
 
             DB::transaction(function () use ($data, $user) {
                 $this->expensesRepository->create(
