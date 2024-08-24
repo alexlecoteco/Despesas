@@ -34,9 +34,9 @@ class BudgetController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(User $user)
+    public function show(int $id): JsonResource
     {
-        return $this->budgetService->show($user->id);
+        return $this->budgetService->show($id);
     }
 
     /**

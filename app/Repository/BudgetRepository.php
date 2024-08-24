@@ -3,7 +3,6 @@
 namespace App\Repository;
 
 use App\Models\BudgetModel;
-use App\Models\ExpensesModel;
 use Illuminate\Support\Carbon;
 
 readonly class BudgetRepository
@@ -35,7 +34,7 @@ readonly class BudgetRepository
         Carbon $dueDate,
         ?string $description = null,
         ?BudgetModel $associatedBudget = null
-    ): ExpensesModel
+    ): BudgetModel
     {
         return $this->budgetModel->create([
             'name' => $name,

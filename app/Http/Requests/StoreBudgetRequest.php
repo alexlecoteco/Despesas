@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use App\DataTransferObjects\BudgetObject;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Carbon;
 
 class StoreBudgetRequest extends FormRequest
 {
@@ -13,7 +14,7 @@ class StoreBudgetRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,11 +25,11 @@ class StoreBudgetRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required,string',
-            'amount' => 'required,numeric',
-            'due_date' => 'required,date',
-            'description' => 'nullable,string',
-            'associated_budget_id' => 'nullable,exists:budgets,id'
+            'name' => 'required',
+            'amount' => 'required|numeric',
+            'due_date' => 'required|date',
+            'description' => 'nullable',
+            'associated_budget_id' => 'nullable|exists:budgets,id'
         ];
     }
 
@@ -37,7 +38,7 @@ class StoreBudgetRequest extends FormRequest
         return new BudgetObject(
             $this->input('name'),
             $this->input('amount'),
-            $this->input('due_date'),
+            Carbon::parse($this->input('due_date')),
             $this->input('description'),
             $this->input('associated_budget_id')
         );
